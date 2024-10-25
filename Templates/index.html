@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dojo Project</title>
+  <style>
+    body {
+      margin: 0;
+      box-sizing: border-box;
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    /* CSS for header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #9A03FF;
+      padding: 10px 20px;
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    .header .logo {
+      font-size: 25px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-items {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-items a {
+      text-decoration: none;
+      color: #fff;
+      padding: 15px;
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    .nav-items input[type="text"] {
+      padding: 5px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .main-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background-color: #FFF3F8; 
+    }
+
+    .main-image {
+      margin-right: 20px; 
+    }
+
+    .main-text {
+      text-align: left; 
+    }
+
+    .button {
+      border: none;
+      color: white;
+      padding: 15px 32px;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      font-family: "Fira Sans", sans-serif;
+      margin: 4px 2px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button1 {
+      background-color: #FF3385;
+    }
+    
+    .button1:hover {
+      background-color: #e0266e;
+    }
+
+    .button2 {
+      background-color: #FF9A03;
+    }
+
+    .button2:hover {
+      background-color: #d68902;
+    }
+
+    @media (max-width: 600px) {
+      .main-container {
+        flex-direction: column; 
+        align-items: center;
+      }
+
+      .main-image {
+        margin-right: 0; 
+        margin-bottom: 20px; 
+      }
+    }
+  </style>
+</head>
+<body>
+    <header class="header">
+      <a href="#" class="logo">The Dojo Project</a>
+      <nav class="nav-items">
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/booking">Book an activity</a>
+        <a href="/organise">Organise an activity</a>
+        <input type="text" placeholder="Search...">
+      </nav>
+    </header>
+    <main>
+        <div class="main-container">
+            <div class="main-image">
+                <img src="https://www.miraie.click/wordpress/wp-content/uploads/2017/12/710a8a40f5b6ccf0615076d7b5ef4d81.jpg" alt="Dojo Project Image" height="500" width="500">
+            </div>
+            <div class="main-text">
+                <h2>We are the Dojo Project!!</h2>
+                <button class="button button1">Find a club</button>
+                <button class="button button2">Host a club</button>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

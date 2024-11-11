@@ -22,7 +22,7 @@ def login():
 
         username = request.form['username']
         password = request.form['password']
-        email = request.form['email']
+
         try:
             cursor = connection.cursor()
             cursor.execute(f"SELECT * FROM users WHERE email= '{username}'")
@@ -32,25 +32,41 @@ def login():
             return render_template('login.html')
         finally:    
             cursor.close()
-        if user: 
-            if check_password_hash(user[3], password):
-                return redirect(url_for('index'))
-            else:
-                return render_template('login.html', error = "Invalid password")
+            
+        if user and check_password_hash(user['password'], password):
+            return redirect(url_for('index'))
         else:
-            try:
-                query = "INSERT INTO users VALUES (NULL, ?, ?, ?)"
-                insert_data = (username, email, generate_password_hash(password))
-                cursor = connection.cursor()
-                cursor.execute(query, insert_data)
-                connection.commit()
-            except sqlite3.Error as error:
-                print("Database error: ", error)
-                return render_template('signup.html')
-            finally:
-                cursor.close()
-                return redirect(url_for('login'))
+            return render_template('login.html', error="Invalid username or password")
+    
     return render_template('login.html')
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        firstname = request.form['firstname']
+        surname = request.form['surname']
+        email = request.form['email']
+        password = request.form['password']
+        
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM users WHERE email = ?", (email,))
+        existing_user = cursor.fetchone()
+
+        if existing_user:
+            return render_template('signup.html', error="Email is already registered")
+        
+        hashed_password = generate_password_hash(password)
+        try:
+            cursor.execute("INSERT INTO users (firstname, surname, email, password) VALUES (?, ?, ?, ?)",
+                           (firstname, surname, email, hashed_password))
+            connection.commit()
+            cursor.close()
+            return redirect(url_for('login'))
+        except sqlite3.Error as error:
+            print("Database error:", error)
+            return render_template('signup.html', error="Error registering user")
+    
+    return render_template('signup.html')
 
 if __name__ == '__main__':
     app.run()

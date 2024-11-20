@@ -43,7 +43,7 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
-        firstname = request.form['firstname']
+        firstname = request.form['firstName']
         surname = request.form['surname']
         email = request.form['email']
         password = request.form['password']
@@ -67,6 +67,14 @@ def signup():
             return render_template('signup.html', error="Error registering user")
     
     return render_template('signup.html')
+
+@app.route("/booking")
+def booking():
+    return render_template("booking.html")
+
+@app.route("/organise")
+def organise():
+    return render_template("organise.html")
 
 if __name__ == '__main__':
     app.run()

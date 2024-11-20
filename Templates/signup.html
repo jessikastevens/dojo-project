@@ -8,6 +8,9 @@
       margin: 0;
       box-sizing: border-box;
       font-family: "Fira Sans", sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     /* CSS for header */
@@ -45,99 +48,183 @@
       border-radius: 5px;
     }
 
-    .main-container {
+    /* Center content vertically and stack form elements */
+    main {
+      flex-grow: 1;
       display: flex;
       justify-content: center;
       align-items: center;
+      background-color: #FFF3F8;
       padding: 20px;
-      background-color: #FFF3F8; 
     }
 
-    .main-image {
-      margin-right: 20px; 
+    .signup-container {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
     }
 
-    .main-text {
-      text-align: left; 
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    .button {
-      border: none;
-      color: white;
-      padding: 15px 32px;
-      text-decoration: none;
-      display: inline-block;
+    .signup-container form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .signup-container label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    .signup-container input {
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .signup-container button {
+      background-color: #fff;
+      color: #000;
+      border-color: #FF3385;
+      padding: 15px;
       font-size: 16px;
-      font-family: "Fira Sans", sans-serif;
-      margin: 4px 2px;
+      border-radius: 5px;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
 
-    .button1 {
-      background-color: #FF3385;
-    }
-    
-    .button1:hover {
+    .signup-container button:hover {
       background-color: #e0266e;
     }
 
-    .button2 {
-      background-color: #FF9A03;
+    .signup-container p {
+      text-align: center;
     }
 
-    .button2:hover {
-      background-color: #d68902;
+    .signup-container a {
+      text-decoration: none;
+      color: #9A03FF;
     }
 
+    /* Footer styles */
+    footer {
+      background-color: #9A03FF;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer .copy {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .bottom-links {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      gap: 40px;
+    }
+
+    .bottom-links .links {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bottom-links .links span {
+      font-size: 20px;
+      color: #fff;
+      text-transform: uppercase;
+      margin: 10px 0;
+    }
+
+    .bottom-links .links a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    /* Responsive adjustments for smaller screens */
     @media (max-width: 600px) {
-      .main-container {
-        flex-direction: column; 
+      .signup-container {
+        width: 90%;
+      }
+
+      .bottom-links {
+        flex-direction: column;
         align-items: center;
       }
 
-      .main-image {
-        margin-right: 0; 
-        margin-bottom: 20px; 
+      .bottom-links .links {
+        margin-bottom: 20px;
       }
     }
   </style>
 </head>
+
 <body>
-    <header class="header">
-      <a href="#" class="logo">The Dojo Project</a>
-      <nav class="nav-items">
+  <header class="header">
+    <a href="#" class="logo">The Dojo Project</a>
+    <nav class="nav-items">
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/booking">Book an activity</a>
+      <a href="/organise">Organise an activity</a>
+      <input type="text" placeholder="Search...">
+    </nav>
+  </header>
+
+  <main>
+    <div class="signup-container">
+      <h2>Sign Up</h2>
+      <form action="/signup" method="post">
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required>
+
+        <label for="firstName">First Name: </label>
+        <input type="text" id="firstName" name="firstName" required>
+
+        <label for="surname">Surname: </label>
+        <input type="text" id="surname" name="surname" required>
+
+        <button type="submit">Sign Up</button>
+      </form>
+
+      <p>Already have an account? <a href="/login">Login</a></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="copy">&copy; The Dojo Project</div>
+    <div class="bottom-links">
+      <div class="links">
+        <span>Site Links</span>
         <a href="/">Home</a>
         <a href="/login">Login</a>
+        <a href="/signup">Sign up</a>
         <a href="/booking">Book an activity</a>
         <a href="/organise">Organise an activity</a>
-        <input type="text" placeholder="Search...">
-      </nav>
-    </header>
-    <main>
-        <div class="signup-container">
-            <h2>Sign Up</h2>
-            <form action="/signup" method="post">
-                <label for="username">Username: </label>
-                <input type="text" id="username" name="username" required>
-    
-                <label for="email">Email: </label>
-                <input type="email" id="email" name="email" required>
-    
-                <label for="password">Password: </label>
-                <input type="password" id="password" name="password" required>
-    
-                <label for="firstName">First Name: </label>
-                <input type="text" id="firstName" name="firstName" required>
-    
-                <label for="surname">Surname: </label>
-                <input type="text" id="surname" name="surname" required>
-    
-                <button type="submit">Sign Up</button>
-            </form>
-    
-            <p>Already have an account? <a href="/login">Login</a></p>
-        </div>
-    </main>  
+      </div>
+    </div>
+  </footer>
 </body>
+
 </html>

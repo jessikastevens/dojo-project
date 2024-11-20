@@ -4,17 +4,20 @@
 <head>
   <title>Dojo Project</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      box-sizing: border-box;
       font-family: "Fira Sans", sans-serif;
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      min-height: 100vh; /* Ensures body takes full height of the viewport */
     }
 
     main {
-      flex: 1;
+      flex: 1; /* This ensures that the main content grows and takes up available space */
     }
 
     /* CSS for header */
@@ -24,7 +27,6 @@
       align-items: center;
       background-color: #9A03FF;
       padding: 10px 20px;
-      font-family: "Fira Sans", sans-serif;
     }
 
     .header .logo {
@@ -51,64 +53,16 @@
       border-radius: 5px;
     }
 
-    /* Styling the login form */
-    .login-container {
-      display: flex;
-      flex-direction: column; /* Stack form elements vertically */
-      align-items: center; /* Center align the form */
-      justify-content: center; /* Center the content vertically */
-      width: 100%;
-      max-width: 400px; /* Optional: limit the form width for better readability */
-      margin: 0 auto; /* Center form horizontally */
-      padding: 20px;
-      background-color: #FFF3F8;
-      border-radius: 8px;
-    }
-
-    .login-container label {
-      margin-bottom: 8px; /* Space between label and input field */
-      font-size: 14px; /* Adjust label font size */
-    }
-
-    .login-container input {
-      padding: 10px;
-      margin-bottom: 15px; /* Space between input fields */
-      width: 100%; /* Make input fields full width */
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-
-    .login-container button {
-      background-color: #fff;
-      color: #000;
-      border-color: #FF3385;
-      padding: 15px;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    .login-container button:hover {
-      background-color: #FF3385;
-    }
-
-    .login-container p {
-      text-align: center;
-      font-size: 14px;
-    }
-
-    .login-container a {
-      color: #FF3385;
-      text-decoration: none;
-    }
-
-    footer {
+    /* Footer Styling */
+    .footer {
       background-color: #9A03FF;
       padding: 40px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      width: 100%;
+      /* Footer stays at the bottom */
     }
 
     .footer .copy {
@@ -145,6 +99,46 @@
       padding: 10px 20px;
     }
 
+    /* Form Styling */
+    .organisation-container {
+      padding: 20px;
+    }
+
+    .organisation-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .organisation-container label {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .organisation-container input[type="text"],
+    .organisation-container input[type="datetime"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .organisation-container button {
+      background-color: #fff;
+      color: #000;
+      border-color: #FF3385;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .organisation-container button:hover {
+      background-color: #FF3385;
+    }
+
+    /* Responsive adjustments for smaller screens */
     @media (max-width: 600px) {
       .main-container {
         flex-direction: column;
@@ -164,6 +158,16 @@
       .bottom-links .links {
         margin-bottom: 20px;
       }
+
+      .organisation-container form {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .organisation-container button {
+        width: 100%;
+        padding: 15px;
+      }
     }
   </style>
 </head>
@@ -181,22 +185,26 @@
   </header>
 
   <main>
-    <div class="login-container">
-      <h2>Login</h2>
-      <form action="/login" method="post">
-        <label for="username">Username: </label>
-        <input type="text" id="username" name="username" required>
+    <div class="organisation-container">
+        <h2>Organise an activity</h2>
+        <form action="/organise" method="post">
+            <label for="location">Location: </label>
+            <input type="text" id="location" name="location" required>
 
-        <label for="email">Email: </label>
-        <input type="email" id="email" name="email" required>
+            <label for="course">Course: </label>
+            <input type="text" id="course" name="course" required>
 
-        <label for="password">Password: </label>
-        <input type="password" id="password" name="password" required>
+            <label for="instructor">Instructor: </label>
+            <input type="text" id="instructor" name="instructor" required>
 
-        <button type="submit">Login</button>
-      </form>
+            <label for="date">Date: </label>
+            <input type="datetime-local" id="date" name="datetime" required>
 
-      <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            <label for="organiser">Organiser: </label>
+            <input type="text" id="organiser" name="organiser" required>
+
+            <button type="submit">Submit</button>
+        </form>
     </div>
   </main>
 
@@ -213,7 +221,6 @@
       </div>
     </div>
   </footer>
-
 </body>
-</html>
 
+</html>

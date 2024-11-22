@@ -168,6 +168,13 @@
         width: 100%;
         padding: 15px;
       }
+
+      .error-message {
+      color: red;
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: center;
+      }
     }
   </style>
 </head>
@@ -198,7 +205,7 @@
             <input type="text" id="instructor" name="instructor" required>
 
             <label for="date">Date: </label>
-            <input type="datetime-local" id="date" name="datetime" required>
+            <input type="datetime-local" id="date" name="date" required>
 
             <label for="organiser">Organiser: </label>
             <input type="text" id="organiser" name="organiser" required>
@@ -206,6 +213,13 @@
             <button type="submit">Submit</button>
         </form>
     </div>
+
+    {% if error %}
+    <div class="error-message" style="color: red; font-weight: bold;">
+      {{ error }}
+    </div>
+    {% endif %}
+
   </main>
 
   <footer class="footer">

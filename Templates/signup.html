@@ -170,6 +170,13 @@
       .bottom-links .links {
         margin-bottom: 20px;
       }
+
+      .error-message {
+      color: red;
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: center;
+      }
     }
   </style>
 </head>
@@ -210,6 +217,13 @@
 
       <p>Already have an account? <a href="/login">Login</a></p>
     </div>
+
+      {% if error %}
+      <div class="error-message" style="color: red; font-weight: bold;">
+        {{ error }}
+      </div>
+      {% endif %}
+ 
   </main>
 
   <footer class="footer">

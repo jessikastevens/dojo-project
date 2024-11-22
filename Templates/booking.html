@@ -185,35 +185,39 @@
 
   <main>
     <div class="booking-container">
-        <h2>Book an activity</h2>
+        <h2>Book an Activity</h2>
         <form action="/booking" method="post">
             <label for="location">Location: </label>
-            <input type="text" id="location" name="location" required>
+            <input type="text" id="location" name="location" required><br>
 
-            <label for="course">Course: </label>
-            <input type="text" id="course" name="course" required>
+            <label for="course">Choose a course:</label>
+            <select id="course" name="course" required>
+                <option value="game design">Game Design</option>
+                <option value="scratch">Scratch</option>
+                <option value="option3">Option 3</option>
+                <option value="option4">Option 4</option>
+            </select><br>
 
-            <label for="childName">Child name: </label>
-            <input type="text" id="childName" name="childName" required>
+            <label for="childName">Child Name: </label>
+            <input type="text" id="childName" name="childName" required><br>
 
-            <label for="childAge">Child age: </label>
-            <input type="text" id="childAge" name="childAge" required>
+            <label for="childAge">Child Age: </label>
+            <input type="number" id="childAge" name="childAge" required><br>
 
             <label for="date">Date: </label>
-            <input type="datetime" id="date" name="datetime" required>
+            <input type="datetime-local" id="date" name="datetime" required><br>
 
             <p>Does your child have coding experience?</p>
-            <button class="button button">Yes</button>
-            <button class="button button">No</button>
+            <input type="radio" id="codingYes" name="codingExperience" value="yes">
+            <label for="codingYes">Yes</label><br>
+            <input type="radio" id="codingNo" name="codingExperience" value="no">
+            <label for="codingNo">No</label><br>
 
-            <p>Would you like to add another child?</p>
-            <button class="button button">Yes</button>
-            <button class="button button">No</button>
-
+            <p>Like to add another child? <a href="/booking">Add another child</a></p>
             <button type="submit">Submit</button>
         </form>
     </div>
-  </main>
+</main>
 
   <footer class="footer">
     <div class="copy">&copy; The Dojo Project</div>

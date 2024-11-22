@@ -6,11 +6,25 @@ app = Flask(__name__)
 
 connection = sqlite3.connect('DojoProject.db', check_same_thread=False)
 query = """CREATE TABLE IF NOT EXISTS
-    users(id INTEGER PRIMARY KEY, firstname TEXT NOT NULL, surname TEXT NOT NULL,
+    users(id INTEGER PRIMARY KEY,username TEXT NOT NULL, firstname TEXT NOT NULL, surname TEXT NOT NULL,
 email TEXT NOT NULL UNIQUE, password TEXT NOT NULL)"""
 cursor = connection.cursor()
 cursor.execute(query)
-cursor.close()
+
+connection = sqlite3.connect('DojoProject.db', check_same_thread=False)
+query = """CREATE TABLE IF NOT EXISTS
+    events(id INTEGER PRIMARY KEY, location TEXT NOT NULL, course TEXT NOT NULL,
+instructor TEXT NOT NULL, date DATETIME NOT NULL, organiser TEXT NOT NULL)"""
+cursor = connection.cursor()
+cursor.execute(query)
+
+connection = sqlite3.connect('DojoProject.db', check_same_thread=False)
+query = """CREATE TABLE IF NOT EXISTS
+    bookings(id INTEGER PRIMARY KEY, location TEXT NOT NULL, course TEXT NOT NULL, childName TEXT NOT NULL, 
+    childAge INTEGER NOT NULL, date DATETIME NOT NULL, codingExperience TEXT NOT NULL)"""
+cursor = connection.cursor()
+cursor.execute(query)
+
 
 @app.route("/")
 def index():
@@ -30,8 +44,6 @@ def login():
         except sqlite3.Error as error:
             print("Database error:", error)
             return render_template('login.html')
-        finally:    
-            cursor.close()
             
         if user and check_password_hash(user['password'], password):
             return redirect(url_for('index'))
@@ -43,6 +55,7 @@ def login():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        username = request.form['username']
         firstname = request.form['firstName']
         surname = request.form['surname']
         email = request.form['email']
@@ -57,10 +70,9 @@ def signup():
         
         hashed_password = generate_password_hash(password)
         try:
-            cursor.execute("INSERT INTO users (firstname, surname, email, password) VALUES (?, ?, ?, ?)",
-                           (firstname, surname, email, hashed_password))
+            cursor.execute("INSERT INTO users (username, firstname, surname, email, password) VALUES (?, ?, ?, ?, ?)",
+                           (username, firstname, surname, email, hashed_password))
             connection.commit()
-            cursor.close()
             return redirect(url_for('login'))
         except sqlite3.Error as error:
             print("Database error:", error)
@@ -68,13 +80,59 @@ def signup():
     
     return render_template('signup.html')
 
-@app.route("/booking")
+@app.route("/booking", methods = ['GET','POST'])
 def booking():
-    return render_template("booking.html")
+    if request.method == 'POST':
+        location = request.form.get('location')
+        course = request.form.get('course')
+        childName = request.form.get('childName')
+        childAge = request.form.get('childAge')
+        date = request.form.get('datetime')
+        codingExperience = request.form.get('codingExperience')
 
-@app.route("/organise")
+        if not all([location, course, childName, childAge, date, codingExperience]):
+            return render_template('booking_form.html', error="All fields are required.")
+        
+        try:
+            cursor.execute(
+                "INSERT INTO bookings (location, course, childName, childAge, date, codingExperience, addChild) "
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                (location, course, childName, childAge, date, codingExperience)
+            )
+            connection.commit()
+            return redirect(url_for('booking'))
+        except sqlite3.Error as error:
+            print("Database error: ", error)
+            return render_template('booking.html', error="Error booking event")
+       
+    return render_template('booking.html')
+
+@app.route("/organise", methods=["GET", "POST"])
 def organise():
-    return render_template("organise.html")
+    if request.method == 'POST':
+        location = request.form.get('location')
+        course = request.form.get('course')
+        instructor = request.form.get('instructor')
+        date = request.form.get('date')
+        organiser = request.form.get('organiser')
+
+        if not all([location, course, instructor, date, organiser]):
+            return render_template('organise.html', error="All fields are required.")
+
+        try:
+            cursor.execute(
+                "INSERT INTO events (location, course, instructor, date, organiser) VALUES (?,?,?,?,?)",
+                (location, course, instructor, date, organiser)
+            )
+            connection.commit()
+            return redirect(url_for('booking'))
+        except sqlite3.Error as error:
+            print("Database error: ", error)
+            return render_template('organise.html', error="Error organising event")
+        finally:
+            cursor.close()
+
+    return render_template('organise.html')
 
 if __name__ == '__main__':
     app.run()

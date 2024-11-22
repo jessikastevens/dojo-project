@@ -21,7 +21,7 @@ cursor.execute(query)
 connection = sqlite3.connect('DojoProject.db', check_same_thread=False)
 query = """CREATE TABLE IF NOT EXISTS
     bookings(id INTEGER PRIMARY KEY, location TEXT NOT NULL, course TEXT NOT NULL, childName TEXT NOT NULL, 
-    childAge INTEGER NOT NULL, date DATETIME NOT NULL, codingExperience TEXT NOT NULL)"""
+    childAge INTEGER NOT NULL, date DATETIME NOT NULL, codingExperience TEXT NOT NULL, addChild TEXT NOT NULL)"""
 cursor = connection.cursor()
 cursor.execute(query)
 
@@ -83,21 +83,22 @@ def signup():
 @app.route("/booking", methods = ['GET','POST'])
 def booking():
     if request.method == 'POST':
-        location = request.form.get('location')
-        course = request.form.get('course')
-        childName = request.form.get('childName')
-        childAge = request.form.get('childAge')
-        date = request.form.get('datetime')
-        codingExperience = request.form.get('codingExperience')
+        location = request.form('location')
+        course = request.form('course')
+        childName = request.form('childName')
+        childAge = request.form('childAge')
+        date = request.form('datetime')
+        codingExperience = request.form('codingExperience')
+        addChild = request.form('addChild')
 
-        if not all([location, course, childName, childAge, date, codingExperience]):
+        if not all([location, course, childName, childAge, date, codingExperience, addChild]):
             return render_template('booking_form.html', error="All fields are required.")
         
         try:
             cursor.execute(
                 "INSERT INTO bookings (location, course, childName, childAge, date, codingExperience, addChild) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-                (location, course, childName, childAge, date, codingExperience)
+                "VALUES (?, ?, ?, ?, ?, ?, ?)",
+                (location, course, childName, childAge, date, codingExperience, addChild)
             )
             connection.commit()
             return redirect(url_for('booking'))

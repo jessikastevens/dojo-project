@@ -21,7 +21,7 @@ cursor.execute(query)
 connection = sqlite3.connect('DojoProject.db', check_same_thread=False)
 query = """CREATE TABLE IF NOT EXISTS
     bookings(id INTEGER PRIMARY KEY, location TEXT NOT NULL, course TEXT NOT NULL, childName TEXT NOT NULL, 
-    childAge INTEGER NOT NULL, date DATETIME NOT NULL, codingExperience TEXT NOT NULL, addChild TEXT NOT NULL)"""
+    childAge INTEGER NOT NULL, date DATETIME NOT NULL, codingExperience TEXT NOT NULL)"""
 cursor = connection.cursor()
 cursor.execute(query)
 
@@ -80,58 +80,59 @@ def signup():
     
     return render_template('signup.html')
 
-@app.route("/booking", methods = ['GET','POST'])
+@app.route("/booking", methods=['GET', 'POST'])
 def booking():
     if request.method == 'POST':
-        location = request.form('location')
-        course = request.form('course')
-        childName = request.form('childName')
-        childAge = request.form('childAge')
-        date = request.form('datetime')
-        codingExperience = request.form('codingExperience')
-        addChild = request.form('addChild')
+        location = request.form['location']
+        course = request.form['course']
+        childName = request.form['childName']
+        childAge = request.form['childAge']
+        date = request.form['datetime']
+        codingExperience = request.form['codingExperience']
 
-        if not all([location, course, childName, childAge, date, codingExperience, addChild]):
-            return render_template('booking_form.html', error="All fields are required.")
+        if not all([location, course, childName, childAge, date, codingExperience]):
+            return render_template('booking.html', error="All fields are required.")
         
         try:
             cursor.execute(
-                "INSERT INTO bookings (location, course, childName, childAge, date, codingExperience, addChild) "
-                "VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (location, course, childName, childAge, date, codingExperience, addChild)
+                "INSERT INTO bookings (location, course, childName, childAge, date, codingExperience) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (location, course, childName, childAge, date, codingExperience)
             )
             connection.commit()
             return redirect(url_for('booking'))
         except sqlite3.Error as error:
             print("Database error: ", error)
-            return render_template('booking.html', error="Error booking event")
+            return render_template('booking.html', error="Error booking event.")
        
     return render_template('booking.html')
+
 
 @app.route("/organise", methods=["GET", "POST"])
 def organise():
     if request.method == 'POST':
-        location = request.form.get('location')
-        course = request.form.get('course')
-        instructor = request.form.get('instructor')
-        date = request.form.get('date')
-        organiser = request.form.get('organiser')
+        location = request.form['location']
+        course = request.form['course']
+        instructor = request.form['instructor']
+        date = request.form['date']
+        organiser = request.form['organiser']
 
         if not all([location, course, instructor, date, organiser]):
             return render_template('organise.html', error="All fields are required.")
 
         try:
             cursor.execute(
-                "INSERT INTO events (location, course, instructor, date, organiser) VALUES (?,?,?,?,?)",
+                "INSERT INTO events (location, course, instructor, date, organiser) "
+                "VALUES (?,?,?,?,?)",
                 (location, course, instructor, date, organiser)
             )
             connection.commit()
-            return redirect(url_for('booking'))
+            return render_template('organise.html') 
         except sqlite3.Error as error:
             print("Database error: ", error)
             return render_template('organise.html', error="Error organising event")
         finally:
-            cursor.close()
+             cursor.close()
 
     return render_template('organise.html')
 

@@ -173,6 +173,29 @@
       margin-top: 10px;
       text-align: center;
       }
+
+      .form-popup {
+        display: none; 
+        position: fixed;
+        flex-direction: column;
+        align-items: center;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+      .form-popup a {
+        display: block; 
+        margin-top: 10px; 
+        color: #9A03FF;
+        flex-direction: column;
+        align-items: center;
+        }
     }
   </style>
 </head>
@@ -192,12 +215,12 @@
   <main>
     <div class="booking-container">
         <h2>Book an Activity</h2>
-        <form action="/booking" method="post">
+        <form id="organiseForm" action="/booking" method="post" onsubmit="openForm(event)">
             <label for="location">Location</label>
             <select id="location" name="location" required>
               <option value="" disabled selected>Select a location</option>
               <option value="london">London</option>
-              <option value="horsham">Manchester</option>
+              <option value="manchester">Manchester</option>
               <option value="york">York</option>
               <option value="cambridge">Cambridge</option>
             </select><br>
@@ -229,6 +252,10 @@
             <p>Like to add another child? <a href="/booking">Add another child</a></p>
             <button type="submit">Submit</button>
         </form>
+        <div class="form-popup" id="myPopup">
+          <h1>Thank you for booking an activity</h1>
+          <a href="/index">Return to homepage here</a>
+        </div>
     </div>
 
     {% if error %}
@@ -253,5 +280,21 @@
     </div>
   </footer>
 </body>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("myPopup").style.display = "none";
+  });
+
+  function openForm(event) {
+  event.preventDefault();
+
+  document.getElementById("myPopup").style.display = "block";
+
+  setTimeout(function() {
+          document.getElementById("organiseForm").submit();
+      }, 10000);
+  }
+
+  </script>
 
 </html>

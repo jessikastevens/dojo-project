@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dojo Project</title>
+  <style>
+    body {
+      margin: 0;
+      box-sizing: border-box;
+      font-family: "Fira Sans", sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    main {
+      flex: 1;
+    }
+
+    /* CSS for header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #9A03FF;
+      padding: 10px 20px;
+      font-family: "Fira Sans", sans-serif;
+    }
+
+    .header .logo {
+      font-size: 25px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-items {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-items a {
+      text-decoration: none;
+      color: #fff;
+      padding: 15px;
+    }
+
+    .nav-items input[type="text"] {
+      padding: 5px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    /* Styling the login form */
+    .login-container {
+      display: flex;
+      flex-direction: column; /* Stack form elements vertically */
+      align-items: center; /* Center align the form */
+      justify-content: center; /* Center the content vertically */
+      width: 100%;
+      max-width: 400px; /* Optional: limit the form width for better readability */
+      margin: 0 auto; /* Center form horizontally */
+      padding: 20px;
+      background-color: #FFF3F8;
+      border-radius: 8px;
+    }
+
+    .login-container label {
+      margin-bottom: 8px; /* Space between label and input field */
+      font-size: 14px; /* Adjust label font size */
+    }
+
+    .login-container input {
+      padding: 10px;
+      margin-bottom: 15px; /* Space between input fields */
+      width: 100%; /* Make input fields full width */
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .login-container button {
+      background-color: #fff;
+      color: #000;
+      border-color: #FF3385;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .login-container button:hover {
+      background-color: #FF3385;
+    }
+
+    .login-container p {
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .login-container a {
+      color: #FF3385;
+      text-decoration: none;
+    }
+
+    footer {
+      background-color: #9A03FF;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer .copy {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .bottom-links {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      gap: 40px;
+    }
+
+    .bottom-links .links {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bottom-links .links span {
+      font-size: 20px;
+      color: #fff;
+      text-transform: uppercase;
+      margin: 10px 0;
+    }
+
+    .bottom-links .links a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    @media (max-width: 600px) {
+      .main-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .main-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .bottom-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bottom-links .links {
+        margin-bottom: 20px;
+      }
+
+      .error-message {
+      color: red;
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: center;
+      }
+
+      .form-popup {
+        display: none; 
+        position: fixed;
+        flex-direction: column;
+        align-items: center;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+      .form-popup a {
+        display: block; 
+        margin-top: 10px; 
+        color: #9A03FF;
+        flex-direction: column;
+        align-items: center;
+        }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="#" class="logo">The Dojo Project</a>
+    <nav class="nav-items">
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/booking">Book an activity</a>
+      <a href="/organise">Organise an activity</a>
+      <input type="text" placeholder="Search...">
+    </nav>
+  </header>
+
+  <main>
+    <div class="login-container">
+      <h2>Login</h2>
+      <form action="/login" method="post">
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Email: </label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password: </label>
+        <input type="password" id="password" name="password" required>
+
+        <button type="submit">Login</button>
+      </form>
+
+      <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+    </div>
+
+    {% if error %}
+    <div class="error-message" style="color: red; font-weight: bold;">
+      {{ error }}
+    </div>
+    {% endif %}
+  </main>
+
+  <footer class="footer">
+    <div class="copy">&copy; The Dojo Project</div>
+    <div class="bottom-links">
+      <div class="links">
+        <span>Site Links</span>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/signup">Sign up</a>
+        <a href="/booking">Book an activity</a>
+        <a href="/organise">Organise an activity</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
+

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Dojo Project</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Fira Sans", sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh; /* Ensures body takes full height of the viewport */
+    }
+
+    main {
+      flex: 1; /* This ensures that the main content grows and takes up available space */
+    }
+
+    /* CSS for header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #9A03FF;
+      padding: 10px 20px;
+    }
+
+    .header .logo {
+      font-size: 25px;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .nav-items {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-items a {
+      text-decoration: none;
+      color: #fff;
+      padding: 15px;
+    }
+
+    .nav-items input[type="text"] {
+      padding: 5px;
+      margin-left: 10px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    footer {
+      background-color: #9A03FF;
+      padding: 40px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      /* Footer stays at the bottom */
+    }
+
+    .footer .copy {
+      color: #fff;
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .bottom-links {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      gap: 40px;
+    }
+
+    .bottom-links .links {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .bottom-links .links span {
+      font-size: 20px;
+      color: #fff;
+      text-transform: uppercase;
+      margin: 10px 0;
+    }
+
+    .bottom-links .links a {
+      text-decoration: none;
+      color: #fff;
+      padding: 10px 20px;
+    }
+
+    /* Form Styling */
+    .booking-container {
+      padding: 20px;
+    }
+
+    .booking-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .booking-container label {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
+
+    .booking-container input[type="text"],
+    .booking-container input[type="datetime"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .booking-container button {
+      background-color: #fff;
+      color: #000;
+      border-color: #FF3385;
+      padding: 15px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .booking-container button:hover {
+      background-color: #FF3385;
+    }
+
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 600px) {
+      .main-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .main-image {
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .bottom-links {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .bottom-links .links {
+        margin-bottom: 20px;
+      }
+
+      .booking-container form {
+        width: 100%;
+        padding: 10px;
+      }
+
+      .booking-container button {
+        width: 100%;
+        padding: 15px;
+      }
+      .error-message {
+      color: red;
+      font-size: 16px;
+      margin-top: 10px;
+      text-align: center;
+      }
+
+      .form-popup {
+        display: none; 
+        position: fixed;
+        flex-direction: column;
+        align-items: center;
+        bottom: 0;
+        right: 15px;
+        border: 3px solid #f1f1f1;
+        z-index: 9;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+      .form-popup a {
+        display: block; 
+        margin-top: 10px; 
+        color: #9A03FF;
+        flex-direction: column;
+        align-items: center;
+        }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="header">
+    <a href="#" class="logo">The Dojo Project</a>
+    <nav class="nav-items">
+      <a href="/">Home</a>
+      <a href="/login">Login</a>
+      <a href="/booking">Book an activity</a>
+      <a href="/organise">Organise an activity</a>
+      <input type="text" placeholder="Search...">
+    </nav>
+  </header>
+
+  <main>
+    <div class="booking-container">
+        <h2>Book an Activity</h2>
+        <form id="organiseForm" action="/booking" method="post" onsubmit="openForm(event)">
+            <label for="location">Location</label>
+            <select id="location" name="location" required>
+              <option value="" disabled selected>Select a location</option>
+              <option value="london">London</option>
+              <option value="manchester">Manchester</option>
+              <option value="york">York</option>
+              <option value="cambridge">Cambridge</option>
+            </select><br>
+
+            <label for="course">Course</label>
+            <select id="course" name="course" required>
+                <option value="" disabled selected>Select a course</option>
+                <option value="game design">Game Design</option>
+                <option value="scratch">Scratch</option>
+                <option value="python">Basic python</option>
+                <option value="web design">Web design</option>
+            </select><br>
+
+            <label for="childName">Child Name: </label>
+            <input type="text" id="childName" name="childName" required><br>
+
+            <label for="childAge">Child Age: </label>
+            <input type="number" id="childAge" name="childAge" required min="4" max="15"><br>
+
+            <label for="date">Date: </label>
+            <input type="datetime-local" id="date" name="datetime" required><br>
+
+            <p>Does your child have coding experience?</p>
+            <input type="radio" id="codingYes" name="codingExperience" value="Yes">
+            <label for="codingYes">Yes</label><br>
+            <input type="radio" id="codingNo" name="codingExperience" value="No">
+            <label for="codingNo">No</label><br>
+
+            <p>Like to add another child? <a href="/booking">Add another child</a></p>
+            <button type="submit">Submit</button>
+        </form>
+        <div class="form-popup" id="myPopup">
+          <h1>Thank you for booking an activity</h1>
+          <a href="/index">Return to homepage here</a>
+        </div>
+    </div>
+
+    {% if error %}
+    <div class="error-message" style="color: red; font-weight: bold;">
+      {{ error }}
+    </div>
+    {% endif %}
+
+</main>
+
+  <footer class="footer">
+    <div class="copy">&copy; The Dojo Project</div>
+    <div class="bottom-links">
+      <div class="links">
+        <span>Site Links</span>
+        <a href="/">Home</a>
+        <a href="/login">Login</a>
+        <a href="/signup">Sign up</a>
+        <a href="/booking">Book an activity</a>
+        <a href="/organise">Organise an activity</a>
+      </div>
+    </div>
+  </footer>
+</body>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  document.getElementById("myPopup").style.display = "none";
+  });
+
+  function openForm(event) {
+  event.preventDefault();
+
+  document.getElementById("myPopup").style.display = "block";
+
+  setTimeout(function() {
+          document.getElementById("organiseForm").submit();
+      }, 10000);
+  }
+
+  </script>
+
+</html>
